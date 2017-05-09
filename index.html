@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.css"> -->
+	<link rel="stylesheet" href="js/jquery.fancybox.min.css">
+	<link rel="stylesheet" href="style.css">
+	
+</head>
+<body>
+	<h1>ElevateZoom responsive gallery</h1>
+	<div class="my-wrapper">
+		<img id="img_01" src="img/sudak-1-small.jpg" data-zoom-image="img/sudak-1-big.jpg"/>
+
+		<div id="gallery_01">
+
+			<a href="#" class="fancydonor" alt="Sudak-1" data-image="img/sudak-1-small.jpg" data-zoom-image="img/sudak-1-big.jpg">
+				<img id="img_01" src="img/sudak-1-thumb.jpg" />
+			</a>
+
+			<a href="#" class="fancydonor" alt="Sudak-2" data-image="img/sudak-2-small.jpg" data-zoom-image="img/sudak-2-big.jpg">
+				<img id="img_01" src="img/sudak-2-thumb.jpg" />
+			</a>
+
+			<a href="#" class="fancydonor" alt="Sudak-3" data-image="img/sudak-3-small.jpg" data-zoom-image="img/sudak-3-big.jpg">
+				<img id="img_01" src="img/sudak-3-thumb.jpg" />
+			</a>
+			<!-- <a href="#" class="fancydonor" alt="Cherry" data-image="http://huliganki.com/fellate/fellate9/original/15.jpg" data-zoom-image="http://pzy.be/i/1/cherryju119.jpg">
+				<img id="img_01" src="https://img.indexxx.com/images/thumbs/200x200/galleries/onlyblowjob/7633bj-cherry-jul-101330/015.jpg" />
+			</a>	 -->
+			<a href="#" class="fancydonor" alt="Генуэзская крепость" data-image="img/novsvet-1-small.jpg" data-zoom-image="img/novsvet-1-big.jpg">
+				<img id="img_01" src="img/novsvet-1-thumb.jpg" />
+			</a>
+
+	</div>
+</div>
+	
+
+	<script src="js/jquery-1.8.3.min.js"></script>
+	<script src="js/jquery.elevateZoom-3.0.8.min.js"></script>
+	<script src="js/jquery.fancybox.min.js"></script>
+	<!-- <script src="js/pack.min.js"></script> -->
+	
+	<script>
+
+
+		$("#img_01").elevateZoom({
+			gallery:'gallery_01', cursor: 'pointer',
+			galleryActiveClass: 'active',
+			imageCrossfade: true,
+			easing: true,
+			responsive: true,
+			loadingIcon: 'http://nscnetworks.com/23/ajax-loading-gif-transparent-background-711.gif'
+		});
+
+
+		$(window).resize(function(e) {
+				var $zWrap = $('.zoomWrapper'),
+						$img = $zWrap.find('img');
+						
+				if($(window).width() < 600){
+					//alert('putin');
+					$zWrap.css('height', $img.height());
+	
+				}
+		});
+
+		$("#img_01").bind("click", function(e) {  
+			var ez = $('#img_01').data('elevateZoom');	
+			
+			var currentSrc = $(this).attr('src');	
+			console.log('CURRENT ' + $(this).attr('src'));
+		
+			var imgArray = document.querySelectorAll('.fancydonor'),
+				urlsArr = [],
+				copy = [],
+				currentItem;
+		[].forEach.call(imgArray, function(item, i) {
+			var url = {
+				src: item.getAttribute('data-zoom-image'),
+				smallSize: item.getAttribute('data-image'),
+				opts : {
+					caption : item.getAttribute('alt')
+				}
+			};
+
+			urlsArr.push(url);
+		
+
+		});
+			//var imgIndex = $(this).index($imgArray);
+			//console.log($(this).get(0).tagName);
+
+			urlsArr.forEach(function(item, i) {
+				if(item.smallSize == currentSrc){
+					currentItem = i;
+				// 	copy = urlsArr.splice(i, 1);
+				// 	console.log('copy '+ i +'/'+ copy.length)
+					
+				// urlsArr.splice(0, 0, copy[0]);
+
+				
+				// console.log(urlsArr);
+				}
+			});
+			
+
+			$.fancybox.open(urlsArr, {
+				index: currentItem,
+				infobar : false,
+				thumbs     : false,
+				closeBtn   : true,
+				nav: true,
+				smallBtn : true
+			});
+		});
+	</script>
+</body>
+
+</html>
